@@ -13,9 +13,19 @@ builder.Services.AddServerSideBlazor();
 // Add authentication state provider for Blazor
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
-// Configure Database
+// Configure Database: use SQLite for Development, SQL Server otherwise
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    if (builder.Environment.IsDevelopment())
+    {
+        var sqliteConn = builder.Configuration.GetConnectionString("SqliteConnection") ?? "Data Source=ContosoDashboard.db";
+        options.UseSqlite(sqliteConn);
+    }
+    else
+    {
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    }
+});
 
 // Configure Mock Authentication (Cookie-based for training purposes)
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
