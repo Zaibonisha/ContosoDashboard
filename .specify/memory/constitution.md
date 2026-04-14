@@ -1,50 +1,50 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: unversioned → 0.1.0
+- Modified principles: (added) Training-Only Safety; Test-First; Security by Design; Observability & Simplicity; Infrastructure Abstraction
+- Added sections: Constraints & Compliance; Development Workflow
+- Removed sections: none
+- Templates requiring updates: .specify/templates/tasks-template.md ✅ updated
+- Templates reviewed (no change required): .specify/templates/plan-template.md ✅, .specify/templates/spec-template.md ✅, .specify/templates/agent-file-template.md ✅
+- Follow-up TODOs: RATIFICATION_DATE left as TODO(RATIFICATION_DATE)
+-->
+
+# ContosoDashboard Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### Training-Only Safety (NON-PRODUCTION)
+The repository and its artifacts are explicitly intended for training and educational use only. The codebase MUST NOT be used for production systems. Any mock authentication, seeded data, or relaxed security controls are allowed only under this training context and must be documented in associated feature specs.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### Test-First (MANDATORY)
+All feature work MUST follow a test-first workflow: write acceptance and unit tests BEFORE implementing behavior; tests MUST fail, implementation is added, then tests MUST pass. Every user story accepted into a spec MUST include verifiable, automated tests or a documented rationale approved by maintainers.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### Security by Design
+Security controls that can be applied in this training context (IDOR protection, role-based policies, authorization checks, secure cookie settings) MUST be present and exercised by tests. Any deviation for training reasons MUST be documented in the relevant spec and labeled `training-exception` with a mitigation plan for production hardening.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### Observability & Simplicity
+Implementations MUST provide minimal, structured observability (structured logs, meaningful error messages) and prioritize simple, auditable implementations over clever but opaque solutions. Avoid premature optimization; prefer clear contracts and measurable goals.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### Infrastructure Abstraction & Migration Path
+The codebase MUST use interface abstractions for infrastructure (storage, authentication, external services) so that training implementations can be swapped for production services (e.g., LocalFileStorage → Azure Blob Storage) without changing business logic. Migration guidance MUST be included in docs for any infrastructure replacement.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Constraints & Compliance
+This project is offline-first for training. It uses mock authentication, LocalDB, and local file storage by design. The repository MUST contain a clear statement in `README.md` that the project is training-only and list any intentional security or reliability limitations. Any contribution that introduces external service dependencies MUST include a configuration toggle to disable those services for offline training.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+- Branching: Feature branches MUST follow `[###-feature-name]` convention; PRs target `main` or the active release branch.
+- Reviews: All PRs require at least two approvals from repository maintainers or approvers listed in `MAINTAINERS.md` and a passing CI gate before merge.
+- CI Gates: CI MUST run unit, integration (where applicable), and security linting. The CI definition SHOULD include a `Constitution Check` job that verifies mandatory items (tests present, license header, no dev-only secrets committed).
+- Tests: Tests MUST be present for all user stories and acceptance criteria. Tests MUST execute in CI and be used as gating criteria for merges.
+- Exceptions: Any approved exception to a core principle MUST be made via a documented PR that includes an explicit mitigation and a target timeline for remediation.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+Amendments to this constitution follow these rules:
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+1. Propose an amendment as a pull request updating this file. Include a migration/implementation plan for any operational impacts.
+2. The PR MUST include at least two maintainer approvals and a successful CI run.
+3. For changes that add or remove principles (semantic governance changes), bump MAJOR version. For additions such as a new principle or materially expanded guidance, bump MINOR. For wording/clarity fixes, bump PATCH.
+4. After merge, update the `Last Amended` date and publish the change in project release notes.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 0.1.0 | **Ratified**: TODO(RATIFICATION_DATE) | **Last Amended**: 2026-04-14
+
